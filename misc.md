@@ -9,7 +9,7 @@
 * 4vogel@informatik.uni-hamburg.de
 * Namenskonvention: Übungszettelnummer_Gruppennummer_Nachnamen
     * z.B. 01_05_Müller_Schneider_Meyer
-    * 01_04_Wille_Krabbe
+    * 01_04_Joergensen_Wille_Krabbe
 * wir: Gruppe 04
 
 ## Übung 1
