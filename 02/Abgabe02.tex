@@ -12,7 +12,27 @@
 \maketitle
 
 
-\section*{Freddy is ein Schnucki}
+\section*{Exercise 2.3: (Search Space Construction 2)} % electric boogaloo
+Das Spielfeld kann als gerichteter Graph repräsentiert werden,
+wobei Knoten, auf denen sich ein Spieler befindet, besonders
+markiert sind.
 
+Eine Möglichkeit, das Problem zu lösen, wäre alle möglichen Zielpunkte
+von Mister X dahingehend zu überprüfen, ob die Kriminalbeamten
+es dort hin schaffen. Dies könnte z.B. mithilfe von Dijkstras
+Algorithmus geschehen. Wenn die Position aller Detektive zu einem
+Zielpunkt von Mister X eine größere Minimaldistanz hat,
+als Schritte erlaubt sind, so ist dieser ein guter Zug.
+
+Diese Strategie ist wohl aber wahrscheinlich recht langsam.
+Eine andere Herangehensweise wäre, alle Knoten, die von
+den Kriminalbeamten erreichbar sind, zu markieren, z.B.
+per einer Variation der Breitensuche, die alle Knoten, die sie abgeht,
+markiert, und abbricht, wenn die Distanz größer ist, als
+die erlaubte Anzahl Schritte.
+
+Jetzt sucht man für Mister X, z.B. per Tiefensuche,
+einen Knoten der nicht markiert, und natürlich auch nicht zu
+weit weg ist.
 
 \end{document}
