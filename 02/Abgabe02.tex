@@ -37,12 +37,40 @@ weit weg ist.
 
 \section*{Excercise 2.4: (Search Space Construction 3)}
 \subsection*{Placing furniture in a flat}
-Der Suchraum wird durch alle möglichen Platzierungen der Möbel gebildet. Der Start der Suche ist ohne ein platziertes Möbelstück und Kanten zu anderen Zuständen entstehen durch Platzieren eines weiteren Mobelstückes.
+Der Suchraum wird durch alle möglichen Platzierungen der Möbel gebildet.
+Der Start der Suche ist ohne ein platziertes Möbelstück und Kanten zu
+anderen Zuständen entstehen durch Platzieren eines weiteren Mobelstückes.
 Ziel der Suche ist eine (von mehreren) für den Bewohner optimale Platzierung.
-Wenn man davon ausgeht, dass nur eine begrenzte Anzahl an Möbeln zur Verfügung steht, ist der Suchraum begrenzt. Dadurch, dass wir nur Möbel in die Wohnung platzieren, entsteht ein gerichteter Graph ohne Zyklen.
-Da wir nur eine von mehreren möglichen optimalen Lösungen suchen und einen endlichen, zyklen-freien Graphen haben, bietet sich eine Tiefensuche an.
+Wenn man davon ausgeht, dass nur eine begrenzte Anzahl an Möbeln
+zur Verfügung steht, ist der Suchraum begrenzt. Dadurch, dass wir
+nur Möbel in die Wohnung platzieren, entsteht ein gerichteter Graph ohne Zyklen.
+Da wir nur eine von mehreren möglichen optimalen Lösungen suchen
+und einen endlichen, zyklen-freien Graphen haben, bietet sich eine Tiefensuche an.
+
 \subsection*{Construction Site planning}
+Am einfachsten wäre es, die einzelnen Konstruktions-Schritte als Knoten
+eines Baumes darzustellen. Dies ist leider in den meisten Fällen nicht
+möglich, da einige Schritte mehrere Abhängigkeiten haben könnten.
+Es wird also ein gerichteter Graph benötigt, wobei dieser wahrscheinlich
+einem Baum ähnlich sehen würde. Er wird außerdem keine Zyklen enthalten,
+da wohl kaum ganze Schritte rückgängig gemacht werden.
+
+Damit das Haus fertig gebaut ist, müssen alle Schritte abgeschlossen
+sein. Also muss man eine Knotenfolge finden, die vom Startknoten
+zum Endknoten verläuft, und in der die Knoten in einer Reihenfolge angeordnet sind,
+die keine Konflikte enthält.
+
+Dies kann bewerkstelligt werden, indem man den Startknoten
+zu einer Queue hinzufügt, und von dort aus eine Breitensuche macht.
+Jeder Knoten, der gefunden wird, und noch nicht in der Struktur
+enthalten ist, wird genau dann hinzugefügt, wenn alle seine Eltern-Knoten
+bereits enthalten sind.
+Erreicht die Breitensuche einen Status, in dem es nicht mehr weiter geht,
+muss von vorne angefangen werden; so lange, bis alle Knoten in der Queue
+eingeordnet sind. Danach kann das Haus entsprechend der Reihenfolge der Schritte
+in der Queue gebaut werden.
 
 \subsection*{Elevator}
+
 
 \end{document}
