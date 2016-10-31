@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage[hidelinks]{hyperref}
 
 \author{Finn-Lasse Jörgensen, Frederik Wille, Tronje Krabbe}
 \title{Tutorial 2: Search Spaces}
@@ -71,6 +72,20 @@ eingeordnet sind. Danach kann das Haus entsprechend der Reihenfolge der Schritte
 in der Queue gebaut werden.
 
 \subsection*{Elevator}
+Es gibt ganze Bücher darüber, wie Fahrstühle gut implementiert werden können
+\footnote{\url{https://books.google.de/books?id=GteIiGQT1S4C&pg=PA278&redir_esc=y&hl=en}}.
 
+Ein simpler Algorithmus, der auch in der Informatik als Algorithmus für Festplatten-Scheduling
+genutzt wird, funktioniert wiefolgt:
+Solange es noch Anfragen in der Richtung, in der sich momentan bewegt wird, sind,
+fahre weiter in diese Richtung. Sind keine Anfragen in der Richtung mehr vorhanden,
+halte an und gehe in einen Warte-Zustand, oder fahre in die andere Richtung, wenn
+da Anfragen vorhanden sind.
+Anfragen können in dieser Darstellung sowohl von außerhalb des Fahrstuhls kommen,
+oder von innerhalb. Dem Fahrstuhl ist es egal, ob eine Passagier in der angefragten
+Etage ein- oder aussteigen will.
+Die genutzte Datenstruktur für Anfragen könnte eine Priority-Queue sein,
+wobei Anfragen, die in Fahrtrichtung liegen, eine höhere Priorität haben,
+als Anfragen in die andere Richtung.
 
 \end{document}
