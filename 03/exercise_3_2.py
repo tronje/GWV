@@ -2,7 +2,11 @@
 # -*- coding: utf-8 -*-
 
 def main():
+    # print, to see if it worked
+    env = read_env()
+    print_env(env)
 
+def read_env():
     # our virtual environment
     env = []
 
@@ -16,9 +20,7 @@ def main():
     for elem in env:
         elem.remove('\n')
 
-        # print, to see if it worked
-        print(elem)
-    print_env(env)
+    return env
 
 def print_env(env):
     for line in env:
