@@ -18,6 +18,13 @@ def main():
 
         # print, to see if it worked
         print(elem)
+    print_env(env)
+
+def print_env(env):
+    for line in env:
+        for char in line:
+            print(char, end="")
+        print("")
 
 if __name__ == '__main__':
     main()
