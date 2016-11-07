@@ -1,5 +1,7 @@
 ## misc
 *.zip
+*.tar
+*.gz
 buch
 
 # Vim
