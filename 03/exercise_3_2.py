@@ -37,12 +37,27 @@ class PlayingField(object):
         """
 
         ret = ""
-        for line in self.environment:
+        for line in self.env:
             for char in line:
                 ret += char
             ret += '\n'
 
         return ret
+
+    def search(self, sfunc, start='s', goal='g'):
+        """Search through the playing field.
+
+        Params:
+        -------
+        sfunc : function
+            The search function to use.
+        start : str
+            The (length 1) string to start the search at.
+        goal : str
+            The (length 1) string to end the search at.
+        """
+
+        raise NotImplementedError("Searching not supported yet!")
 
     @property
     def environment(self):
