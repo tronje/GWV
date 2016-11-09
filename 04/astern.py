@@ -33,7 +33,7 @@ class QElement(object):
             v+=self.toVal
         return v
 
-def astern(start=(0,0),target=(0,0),env=[[]]):#TODO: rebuild
+def astern(field,start=(0,0),target=(0,0)):#TODO: rebuild
     MATRIX=set()
     moves=move_matrix()
     Q=Queue.PriorityQueue()

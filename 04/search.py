@@ -20,6 +20,13 @@ def search(field,start=(0,0),queue=Queue.Queue()):
             N=Q.get_nowait()
             if field.isTarget(N.xy):
                 return N
+            #Portal
+            PORT=field.isPortal(N.xy)
+            if PORT!=None:
+                nN=Node(PORT,N)
+                nN.effect="PORT"
+                N=nN
+            #Portal-end
             l=N.get_next(moves)
             for nextN in l:
                 if (not field.isBlocked(nextN)) and (not N.isIn(nextN)):
@@ -47,6 +54,13 @@ def searchAll(field,start=(0,0),queue=Queue.Queue()):
             N=Q.get_nowait()
             if field.isTarget(N.xy):
                 L.append(N)
+            #Portal
+            PORT = field.isPortal(N.xy)
+            if PORT != None:
+                nN = Node(PORT, N)
+                nN.effect = "PORT"
+                N = nN
+            #Portal-end
             l=N.get_next(moves)
             for nextN in l:
                 if (not field.isBlocked(nextN)) and (not N.isIn(nextN)):

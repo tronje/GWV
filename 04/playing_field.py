@@ -126,11 +126,33 @@ class PlayingField(object):
         return self._filename
 
     def isBlocked(self,xy):#TODO:
+        '''
+
+        :param xy:
+        :return:
+        '''
         return False
     def isStart(self,xy):#TODO:
+        '''
+
+        :param xy:
+        :return:
+        '''
         return False
     def isTarget(self,xy):#TODO:
+        '''
+
+        :param xy:
+        :return:
+        '''
         return False
+    def isPortal(self,xy):#TODO:
+        '''
+
+        :param xy:
+        :return:
+        '''
+        return None
 
 if __name__ == '__main__':
     field = PlayingField("blatt3_environment.txt")

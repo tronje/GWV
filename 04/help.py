@@ -6,6 +6,7 @@ class Node(object):
     def __init__(self,xy=(0,0),root=None):
         self.xy=tuple(xy)
         self.root=root
+        self.effect=None
     def get_next(self,xyOffsets=[]):
         l=[]
         for xyo in xyOffsets:
