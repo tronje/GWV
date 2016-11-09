@@ -125,6 +125,13 @@ class PlayingField(object):
 
         return self._filename
 
+    def isBlocked(self,xy):#TODO:
+        return False
+    def isStart(self,xy):#TODO:
+        return False
+    def isTarget(self,xy):#TODO:
+        return False
+
 if __name__ == '__main__':
     field = PlayingField("blatt3_environment.txt")
     print(field)
