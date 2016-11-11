@@ -129,28 +129,28 @@ class PlayingField(object):
         '''
 
         :param xy:
-        :return:
+        :return: boolean
         '''
         return False
     def isStart(self,xy):#TODO:
         '''
 
         :param xy:
-        :return:
+        :return: boolean
         '''
         return False
     def isTarget(self,xy):#TODO:
         '''
 
         :param xy:
-        :return:
+        :return: boolean
         '''
         return False
     def isPortal(self,xy):#TODO:
         '''
 
         :param xy:
-        :return:
+        :return: None/xy-target
         '''
         return None
 

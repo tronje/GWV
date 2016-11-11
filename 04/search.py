@@ -12,6 +12,7 @@ def search(field,start=(0,0),queue=Queue.Queue()):
     '''
     moves=move_matrix()
     root=Node(start)
+    root.effect = "Start"
     Q=queue
     Q.put(root)
     run=True
@@ -30,7 +31,9 @@ def search(field,start=(0,0),queue=Queue.Queue()):
             l=N.get_next(moves)
             for nextN in l:
                 if (not field.isBlocked(nextN)) and (not N.isIn(nextN)):
-                    Q.put(Node(nextN,N))
+                    nN=Node(nextN,N)
+                    Q.put(nN)
+                    nN.effect=direc(N,nN)
         except:
             run=False
     return None
@@ -45,6 +48,7 @@ def searchAll(field,start=(0,0),queue=Queue.Queue()):
     '''
     moves=move_matrix()
     root=Node(start)
+    root.effect="Start"
     Q=queue
     Q.put(root)
     L=[]
@@ -64,7 +68,9 @@ def searchAll(field,start=(0,0),queue=Queue.Queue()):
             l=N.get_next(moves)
             for nextN in l:
                 if (not field.isBlocked(nextN)) and (not N.isIn(nextN)):
-                    Q.put(Node(nextN,N))
+                    nN = Node(nextN, N)
+                    Q.put(nN)
+                    nN.effect = direc(N, nN)
         except:
             run=False
     return L
