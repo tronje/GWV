@@ -34,6 +34,34 @@ class Node(object):
     def __str__(self):
         return str(self.value)
 
+    def isBlocked(self):
+        '''
+        :param xy:
+        :return: boolean
+        '''
+        return self.value == 'x'
+
+    def isStart(self):
+        '''
+        :param xy: Node
+        :return: boolean
+        '''
+        return self.value == 's'
+
+    def isTarget(self):
+        '''
+        :param xy:
+        :return: boolean
+        '''
+        return self.value == 'g'
+
+    def isPortal(self):
+        '''
+        :param xy:
+        :return: None/xy-target
+        '''
+        return self.value.isdigit()
+
 class Path(list):
     """Collects a Path of nodes starting with a node
     iterating through parents, untill a node without
@@ -160,34 +188,7 @@ class PlayingField(object):
 
         return self._filename
 
-    def isBlocked(self,xy):#TODO:
-        '''
 
-        :param xy:
-        :return: boolean
-        '''
-        return False
-    def isStart(self,xy):#TODO:
-        '''
-
-        :param xy: Node
-        :return: boolean
-        '''
-        return xy.value == 's'
-    def isTarget(self,xy):#TODO:
-        '''
-
-        :param xy:
-        :return: boolean
-        '''
-        return False
-    def isPortal(self,xy):#TODO:
-        '''
-
-        :param xy:
-        :return: None/xy-target
-        '''
-        return None
 
     def findStartNode(self):
         """Find the start Node in the PlayingField
