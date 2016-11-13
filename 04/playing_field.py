@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import math
+import searching
 
 class Node(object):
     """A node in a graph, which has a value,
@@ -9,13 +10,15 @@ class Node(object):
     Intended to be used with, i.e., breadth-first-search.
     """
 
-    def __init__(self, value, distance=math.inf, parent=None):
+    def __init__(self, value, coords, distance=math.inf, parent=None):
         """Initialize a Node.
 
         Params:
         -------
         value : object
             The value saved by this node.
+        coords : (int, int)
+            the coordinates of this Node in the PlayingField
         distance : int
             A variable to hold a distance to be assigned by a search algorithm.
             Default is infinity.
@@ -24,11 +27,27 @@ class Node(object):
         """
 
         self.value = value
+        self.coords = coords
         self.distance = distance
         self.parent = parent
 
     def __str__(self):
         return str(self.value)
+
+class Path(list):
+    def __init__(self, startnode):
+        print("building path")
+        nodes = [startnode]
+        while nodes[-1].parent != None:
+            nodes.append(nodes[-1].parent)
+        nodes.reverse()
+        self.nodes = nodes
+
+    def __str__(self):
+        ret = ""
+        for node in self.nodes:
+            ret += str(node.coords)
+        return ret
 
 class PlayingField(object):
     """Represents a playing field, which is read
@@ -59,11 +78,11 @@ class PlayingField(object):
         """Read the environment from the file `self.filename`."""
 
         with open(self.filename, "r") as f:
-            for line in f:
+            for line_index, line in enumerate(f):
                 temp = []
-                for char in line:
+                for char_index, char in enumerate(line):
                     if char != '\n':
-                        temp.append(Node(char))
+                        temp.append(Node(char, (line_index, char_index)))
                 self._environment.append(temp)
 
     def reset(self):
@@ -101,8 +120,9 @@ class PlayingField(object):
         goal : str
             The (length 1) string to end the search at.
         """
-
-        raise NotImplementedError("Searching not supported yet!")
+        node = sfunc(self.env[:], self.findStartNode())
+        path = Path(node)
+        print(path)
 
     @property
     def environment(self):
@@ -135,10 +155,10 @@ class PlayingField(object):
     def isStart(self,xy):#TODO:
         '''
 
-        :param xy:
+        :param xy: Node
         :return: boolean
         '''
-        return False
+        return xy.value == 's'
     def isTarget(self,xy):#TODO:
         '''
 
@@ -154,6 +174,20 @@ class PlayingField(object):
         '''
         return None
 
+    def findStartNode(self):
+        # for x in range(len(self.env)):
+        #     for y in range(len(self.env[x])):
+        #         if self.isStart(self.env[x][y]):
+        #             return (x,y)
+        for x in range(len(self.env)):
+            for y in range(len(self.env[x])):
+                current = self.env[x][y]
+                if current.value == 's':
+                    return current
+
+
 if __name__ == '__main__':
     field = PlayingField("blatt3_environment.txt")
+    print("Start: " + str(field.findStartNode()))
     print(field)
+    field.search(searching.bfs)
