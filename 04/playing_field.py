@@ -35,7 +35,22 @@ class Node(object):
         return str(self.value)
 
 class Path(list):
+    """Collects a Path of nodes starting with a node
+    iterating through parents, untill a node without
+    a Parent.
+    """
     def __init__(self, startnode):
+        """Initialize a Path starting from a given
+        node.
+        Builds a list by appending the parent of the
+        last item in the list to the list. The List
+        is then reversed to reflect the walked path.
+
+        Params:
+        -------
+        startnode : Node
+            The node to start the path from.
+        """
         print("building path")
         nodes = [startnode]
         while nodes[-1].parent != None:
@@ -175,10 +190,9 @@ class PlayingField(object):
         return None
 
     def findStartNode(self):
-        # for x in range(len(self.env)):
-        #     for y in range(len(self.env[x])):
-        #         if self.isStart(self.env[x][y]):
-        #             return (x,y)
+        """Find the start Node in the PlayingField
+        return: Node with value == 's'
+        """
         for x in range(len(self.env)):
             for y in range(len(self.env[x])):
                 current = self.env[x][y]
