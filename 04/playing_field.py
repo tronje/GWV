@@ -249,12 +249,22 @@ if __name__ == '__main__':
     print(field)
     field.search(searching.bfs)
 
+    field = PlayingField("blatt3_environment.txt")
+    print("Start: " + str(field.findStartNode()))
+    print(field)
+    field.search(searching.dfs)
+
+    field = PlayingField("blatt3_environment_b.txt")
+    print("Start: " + str(field.findStartNode()))
+    print(field)
+    field.search(searching.dfs)
+
     # field = PlayingField("blatt3_environment_b.txt")
     # print("Start: " + str(field.findStartNode()))
     # print(field)
     # field.search(searching.bfs)
 
-    field = PlayingField("portals.txt")
-    print("Start: " + str(field.findStartNode()))
-    print(field)
-    field.search(searching.bfs)
+    # field = PlayingField("portals.txt")
+    # print("Start: " + str(field.findStartNode()))
+    # print(field)
+    # field.search(searching.bfs)

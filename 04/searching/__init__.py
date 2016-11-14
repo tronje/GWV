@@ -1,1 +1,1 @@
-from . searching import bfs
+from . searching import bfs, dfs

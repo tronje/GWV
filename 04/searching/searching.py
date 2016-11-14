@@ -6,7 +6,7 @@ import math
 """Various search functions
 """
 
-def bfs(env, start, goal='g'):
+def bfs(env, start, goal='g', wall='x'):
     """Breadth first search, starting at `start`, ending at `goal`.
 
     Params:
@@ -18,6 +18,8 @@ def bfs(env, start, goal='g'):
         Node object to start at
     goal : str
         The (length 1) string to end the search at
+    wall : str
+        String of length 1 that is treated as non-traversable
     """
 
     # set distance for our start node
@@ -33,7 +35,7 @@ def bfs(env, start, goal='g'):
         # iterate over all neighbours
         for node in neighboursOf(current, env):
             # if it's a valid node...
-            if node.distance == math.inf and node.value != 'x':
+            if node.distance == math.inf and node.value != wall:
                 # ...set its parent
                 node.parent = current
                 # ...and distance
@@ -43,15 +45,39 @@ def bfs(env, start, goal='g'):
                 if node.value == goal:
                     return node
                 else:
+                    # same as enqueue
                     queue.append(node)
 
     raise ValueError("Goal '{}' not found in env!".format(goal))
 
-def dfs(env, start, goal='g'):
+def dfs(env, start, goal='g', wall='x'):
     """Depth first search, starting at `start`, ending at `goal`.
     """
 
-    pass
+    start.distance = 0
+
+    # a list in python can be used just like a stack
+    stack = [start]
+
+    while len(stack) > 0:
+        # note: pop() is the last element
+        # as long as we use append() to add elements,
+        # the stack behaviour is guaranteed
+        current = stack.pop()
+        
+        # iterate over neighbours
+        for node in neighboursOf(current, env):
+            if node.distance == math.inf and node.value != wall:
+                node.parent = current
+                node.distance = current.distance + 1
+
+                if node.value == goal:
+                    return node
+                else:
+                    # same as push()
+                    stack.append(node)
+
+    raise ValueError("Goal '{}' not found in env!".format(goal))
 
 def neighboursOf(node, env, handle_portals=True):
     """All neighbours of a Node in an Environment
