@@ -79,6 +79,13 @@ def dfs(env, start, goal='g', wall='x'):
 
     raise ValueError("Goal '{}' not found in env!".format(goal))
 
+def astar(env, start, goal='g', wall='x'):
+    """A-star search, starting at `start`, ending at `goal`.
+    """
+
+    # TODO
+    pass
+
 def neighboursOf(node, env, handle_portals=True):
     """All neighbours of a Node in an Environment
 
