@@ -92,8 +92,6 @@ class Path(list):
         # remember the playing field we are being used for
         self._pfield = pfield
 
-        print("building path")
-
         # initialize the path as a list of nodes
         # (containing only the startnode at first)
         nodes = [startnode]
@@ -123,7 +121,7 @@ class Path(list):
         env = self._pfield.env.copy()
 
         for node in self.nodes:
-            if node.value in ['s', 'g']:
+            if node.value in ['s', 'g'] or node.value.isdigit():
                 continue
             self._pfield.env[node.x][node.y] = '.'
 
@@ -205,7 +203,6 @@ class PlayingField(object):
         """
         node = sfunc(self.env[:], self.findStartNode())
         path = Path(node, self)
-        print(path)
         path.pretty()
 
     @property
@@ -235,8 +232,6 @@ class PlayingField(object):
 
         return self._filename
 
-
-
     def findStartNode(self):
         """Find the start Node in the PlayingField
         return: Node with value == 's'
@@ -250,6 +245,16 @@ class PlayingField(object):
 
 if __name__ == '__main__':
     field = PlayingField("blatt3_environment.txt")
+    print("Start: " + str(field.findStartNode()))
+    print(field)
+    field.search(searching.bfs)
+
+    # field = PlayingField("blatt3_environment_b.txt")
+    # print("Start: " + str(field.findStartNode()))
+    # print(field)
+    # field.search(searching.bfs)
+
+    field = PlayingField("portals.txt")
     print("Start: " + str(field.findStartNode()))
     print(field)
     field.search(searching.bfs)
