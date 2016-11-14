@@ -1,0 +1,31 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[hidelinks]{hyperref}
+
+\author{Finn-Lasse Jörgensen, Frederik Wille, Tronje Krabbe}
+\title{Tutorial 4: Searching}
+\begin{document}
+\maketitle
+
+
+\section*{Exercise 4.2}
+\subsection*{3.}
+Die vorhandenen Beispiel-Labyrinthe zeigen bereits Unterschiede zwischen
+Breiten- und Tiefensuche. \textit{blatt3\_environment.txt} beispielsweise
+zeigt sehr deutlich, wie die Tiefensuche nach den Prioritäten der Nachfolger-Knoten
+(bei uns momentan: erst oben, dann rechts, unten, und schliesslich links)
+das Feld durchläuft, bis es irgendwann den Zielknoten findet.
+Die Breitensuche läuft ebenfalls viele Knoten ab,
+aber praktisch auf mehrere Pfade verteilt, sodass, findet sie den Zielknoten,
+der resultierende Pfad sehr viel kürzer ist.
+
+\subsection*{4.}
+Da wir loop-detection haben, finden unsere Suchen auch immer zum Ziel.
+Natürlich unter der Vorraussetzung, dass das Ziel überhaupt erreichbar ist.
+
+\end{document}
