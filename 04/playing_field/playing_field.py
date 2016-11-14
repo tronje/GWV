@@ -6,7 +6,6 @@ from .path import Path
 class PlayingField(object):
     """Represents a playing field, which is read
     from a file and stored in a 2d-list.
-    Can be printed and (TODO) searched through.
     """
 
     def __init__(self, filename):

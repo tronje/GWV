@@ -2,21 +2,20 @@
 
 class Path(list):
     """Collects a Path of nodes starting with a node
-    iterating through parents, untill a node without
-    a Parent.
+    iterating through parents, until a node without
+    a parent is found, which is assumed to be the start.
     """
 
     def __init__(self, startnode, pfield):
         """Initialize a Path starting from a given
         node.
-        Builds a list by appending the parent of the
-        last item in the list to the list. The List
-        is then reversed to reflect the walked path.
 
         Params:
         -------
         startnode : Node
             The node to start the path from.
+        pfield : PlayingField
+            The PlayingField in which the Path lives.
         """
 
         # remember the playing field we are being used for
