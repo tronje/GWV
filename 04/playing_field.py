@@ -62,12 +62,21 @@ class Node(object):
         '''
         return self.value.isdigit()
 
+    @property
+    def x(self):
+        return self.coords[0]
+
+    @property
+    def y(self):
+        return self.coords[1]
+
 class Path(list):
     """Collects a Path of nodes starting with a node
     iterating through parents, untill a node without
     a Parent.
     """
-    def __init__(self, startnode):
+
+    def __init__(self, startnode, pfield):
         """Initialize a Path starting from a given
         node.
         Builds a list by appending the parent of the
@@ -79,11 +88,24 @@ class Path(list):
         startnode : Node
             The node to start the path from.
         """
+
+        # remember the playing field we are being used for
+        self._pfield = pfield
+
         print("building path")
+
+        # initialize the path as a list of nodes
+        # (containing only the startnode at first)
         nodes = [startnode]
+
+        # add all parents to build the path
         while nodes[-1].parent != None:
             nodes.append(nodes[-1].parent)
+
+        # reverse to get the correct order
         nodes.reverse()
+
+        # assign to a field of self
         self.nodes = nodes
 
     def __str__(self):
@@ -91,6 +113,24 @@ class Path(list):
         for node in self.nodes:
             ret += str(node.coords)
         return ret
+
+    def pretty(self):
+        """Prettily print the path through the given
+        PlayingField.
+        """
+
+        # save original environment to revert changes later
+        env = self._pfield.env.copy()
+
+        for node in self.nodes:
+            if node.value in ['s', 'g']:
+                continue
+            self._pfield.env[node.x][node.y] = '.'
+
+        print(self._pfield)
+
+        # reset env
+        self._pfield.env = env
 
 class PlayingField(object):
     """Represents a playing field, which is read
@@ -164,8 +204,9 @@ class PlayingField(object):
             The (length 1) string to end the search at.
         """
         node = sfunc(self.env[:], self.findStartNode())
-        path = Path(node)
+        path = Path(node, self)
         print(path)
+        path.pretty()
 
     @property
     def environment(self):
@@ -180,6 +221,12 @@ class PlayingField(object):
         """
 
         return self._environment
+
+    @env.setter
+    def env(self, value):
+        """Env setter"""
+
+        self._environment = value
 
     @property
     def filename(self):
