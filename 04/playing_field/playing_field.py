@@ -108,9 +108,21 @@ class PlayingField(object):
         """Find the start Node in the PlayingField
         return: Node with value == 's'
         """
+        return self.findNode('s')
+
+    def findGoalNode(self):
+        """Find the goal Node in the PlayingField
+        return: Node with value == 'g'
+        """
+        return self.findNode('g')
+
+    def findNode(self, value):
+        """Find a Node in the PlayingField with
+        given value
+        return: Node with node.value == value
+        """
         for x in range(len(self.env)):
             for y in range(len(self.env[x])):
                 current = self.env[x][y]
-                if current.value == 's':
+                if current.value == value:
                     return current
-
