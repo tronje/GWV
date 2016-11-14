@@ -93,10 +93,18 @@ def neighboursOf(node, env, handle_portals=True):
     """
 
     ret = []
-    ret.append(env[node.x + 1][node.y])
-    ret.append(env[node.x - 1][node.y])
+
+    # up
     ret.append(env[node.x][node.y + 1])
+
+    # right
+    ret.append(env[node.x + 1][node.y])
+
+    # down
     ret.append(env[node.x][node.y - 1])
+
+    # left
+    ret.append(env[node.x - 1][node.y])
 
     # handle portals
     if handle_portals and node.value.isdigit():
