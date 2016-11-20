@@ -73,7 +73,7 @@ class PlayingField(object):
         goal : str
             The (length 1) string to end the search at.
         """
-        node = sfunc(self.env[:], self.findStartNode())
+        node = sfunc(self, self.findStartNode())
         path = Path(node, self)
         path.pretty()
 
@@ -104,18 +104,6 @@ class PlayingField(object):
 
         return self._filename
 
-    def findStartNode(self):
-        """Find the start Node in the PlayingField
-        return: Node with value == 's'
-        """
-        return self.findNode('s')
-
-    def findGoalNode(self):
-        """Find the goal Node in the PlayingField
-        return: Node with value == 'g'
-        """
-        return self.findNode('g')
-
     def findNode(self, value):
         """Find a Node in the PlayingField with
         given value
@@ -126,3 +114,15 @@ class PlayingField(object):
                 current = self.env[x][y]
                 if current.value == value:
                     return current
+
+    def findStartNode(self, svalue='s'):
+        """Find the start Node in the PlayingField
+        return: Node with value == svalue
+        """
+        return self.findNode(svalue)
+
+    def findGoalNode(self, gvalue='g'):
+        """Find the goal Node in the PlayingField
+        return: Node with value == gvalue
+        """
+        return self.findNode(gvalue)

@@ -6,14 +6,13 @@ import math
 """Various search functions
 """
 
-def bfs(env, start, goal='g', wall='x'):
+def bfs(pfield, start, goal='g', wall='x'):
     """Breadth first search, starting at `start`, ending at `goal`.
 
     Params:
     -------
-    env : list
-        2-D list representing the PlayingField to be searched
-        shall contain Node objects
+    pfield : PlayingField
+        The PlayingField to be searched.
     start : Node
         Node object to start at
     goal : str
@@ -25,7 +24,7 @@ def bfs(env, start, goal='g', wall='x'):
     # set distance for our start node
     start.distance = 0
 
-    # a list in python can be used lust like a queue
+    # a list in python can be used just like a queue
     queue = [start]
 
     while len(queue) > 0:
@@ -33,7 +32,7 @@ def bfs(env, start, goal='g', wall='x'):
         current = queue.pop(0)
 
         # iterate over all neighbours
-        for node in neighboursOf(current, env):
+        for node in neighboursOf(current, pfield):
             # if it's a valid node...
             if node.distance == math.inf and node.value != wall:
                 # ...set its parent
@@ -48,9 +47,9 @@ def bfs(env, start, goal='g', wall='x'):
                     # same as enqueue
                     queue.append(node)
 
-    raise ValueError("Goal '{}' not found in env!".format(goal))
+    raise ValueError("Goal '{}' not found in playing field!".format(goal))
 
-def dfs(env, start, goal='g', wall='x'):
+def dfs(pfield, start, goal='g', wall='x'):
     """Depth first search, starting at `start`, ending at `goal`.
     """
 
@@ -64,9 +63,9 @@ def dfs(env, start, goal='g', wall='x'):
         # as long as we use append() to add elements,
         # the stack behaviour is guaranteed
         current = stack.pop()
-        
+
         # iterate over neighbours
-        for node in neighboursOf(current, env):
+        for node in neighboursOf(current, pfield):
             if node.distance == math.inf and node.value != wall:
                 node.parent = current
                 node.distance = current.distance + 1
@@ -77,22 +76,62 @@ def dfs(env, start, goal='g', wall='x'):
                     # same as push()
                     stack.append(node)
 
-    raise ValueError("Goal '{}' not found in env!".format(goal))
+    raise ValueError("Goal '{}' not found in pfield!".format(goal))
 
-def astar(env, start, goal='g', wall='x'):
+#
+# Heuristic functions
+#
+
+def _dist_heuristic(pfield, node, goal='g'):
+    gnode = pfield.findNode(goal)
+    return abs(node.x - gnode.x) + abs(node.y - gnode.y)
+
+def astar(pfield, start, goal='g', wall='x', hfunc=_dist_heuristic):
     """A-star search, starting at `start`, ending at `goal`.
     """
 
-    # TODO
-    pass
+    # set distance for our start node
+    start.distance = 0
 
-def neighboursOf(node, env, handle_portals=True):
-    """All neighbours of a Node in an Environment
+    # a list in python can be used just like a queue
+    queue = [start]
+
+    while len(queue) > 0:
+        # pop(0) is the same as dequeue
+        current = queue.pop(0)
+
+        # iterate over all neighbours
+        for node in neighboursOf(current, pfield):
+            # if it's a valid node...
+            if node.distance == math.inf and node.value != wall:
+                # ...set its parent
+                node.parent = current
+                # ...and distance
+                node.distance = current.distance + 1
+                # ...and estimate the cost for the entire path,
+                # if this node were in fact part of it.
+                node.est_cost = node.distance + hfunc(pfield, node)
+
+                # see if we found our goal
+                if node.value == goal:
+                    return node
+                else:
+                    # same as enqueue
+                    queue.append(node)
+
+                    # sort by distance to simulate a priority queue
+                    queue.sort(key=lambda x: x.est_cost)
+
+    raise ValueError("Goal '{}' not found in playing field!".format(goal))
+
+
+def neighboursOf(node, pfield, handle_portals=True):
+    """All neighbours of a Node in a PlayingField.
 
     Params:
     -------
     node : Node
-    env : List
+    pfield : PlayingField
 
     Returns:
     --------
@@ -100,6 +139,7 @@ def neighboursOf(node, env, handle_portals=True):
     """
 
     ret = []
+    env = pfield.env
 
     # up
     ret.append(env[node.x][node.y + 1])
@@ -122,6 +162,6 @@ def neighboursOf(node, env, handle_portals=True):
                     # append to our neighbours the neighbours
                     # of the other portal, but without handling
                     # portals again to avoid infinite recursion
-                    ret += neighboursOf(field, env, handle_portals=False)
+                    ret += neighboursOf(field, pfield, handle_portals=False)
 
     return ret
