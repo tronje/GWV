@@ -18,7 +18,7 @@ class Path(list):
             The PlayingField in which the Path lives.
         """
 
-        # remember the playing field we are being used for
+        # remember the playing field this path lives in
         self._pfield = pfield
 
         # initialize the path as a list of nodes
@@ -26,14 +26,12 @@ class Path(list):
         nodes = [startnode]
 
         # add all parents to build the path
-        while nodes[-1].parent != None:
-            nodes.append(nodes[-1].parent)
+        # insert at 0 ('prepend') to get the correct order
+        while nodes[0].parent != None:
+            nodes.insert(0, nodes[0].parent)
 
-        # reverse to get the correct order
-        nodes.reverse()
-
-        # assign to a field of self
-        self.nodes = nodes
+        # assign to self
+        self._nodes = nodes
 
     def __str__(self):
         ret = ""
@@ -41,16 +39,22 @@ class Path(list):
             ret += str(node.coords)
         return ret
 
-    def pretty(self):
+    def pretty(self, exclude=['s', 'g']):
         """Prettily print the path through the given
         PlayingField.
+
+        Params:
+        -------
+        exclude : list
+            A list of nodes' values to not draw over when
+            drawing the path.
         """
 
         # save original environment to revert changes later
         env = self._pfield.env.copy()
 
-        for node in self.nodes:
-            if node.value in ['s', 'g'] or node.value.isdigit():
+        for node in self._nodes:
+            if node.value in exclude or node.value.isdigit():
                 continue
             self._pfield.env[node.x][node.y] = '.'
 
