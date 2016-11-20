@@ -61,7 +61,7 @@ class PlayingField(object):
 
         return ret
 
-    def search(self, sfunc, start='s', goal='g'):
+    def search(self, sfunc, start='s', goal='g', wall='x'):
         """Search through the playing field.
 
         Params:
@@ -77,7 +77,8 @@ class PlayingField(object):
         --------
         Path object.
         """
-        node = sfunc(self, self.findStartNode())
+
+        node = sfunc(self, self.find_node(start), goal=goal, wall=wall)
         path = Path(node, self)
         return path
 
@@ -108,7 +109,7 @@ class PlayingField(object):
 
         return self._filename
 
-    def findNode(self, value):
+    def find_node(self, value):
         """Find a Node in the PlayingField with
         given value
         return: Node with node.value == value
@@ -119,14 +120,25 @@ class PlayingField(object):
                 if current.value == value:
                     return current
 
-    def findStartNode(self, svalue='s'):
+    def find_start_node(self, svalue='s'):
         """Find the start Node in the PlayingField
         return: Node with value == svalue
         """
-        return self.findNode(svalue)
+        return self.find_node(svalue)
 
-    def findGoalNode(self, gvalue='g'):
+    def find_goal_node(self, gvalue='g'):
         """Find the goal Node in the PlayingField
         return: Node with value == gvalue
         """
-        return self.findNode(gvalue)
+        return self.find_node(gvalue)
+
+    def find_portal_exit(self, node):
+        """Given a portal node, find the other portal with the same value.
+        """
+
+        for x in range(len(self.env)):
+            for y in range(len(self.env[x])):
+                current = self.env[x][y]
+                # values must be equal, but they may not be the same object of course!
+                if current.value == node.value and current != node:
+                    return current

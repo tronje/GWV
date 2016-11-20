@@ -7,7 +7,7 @@ from playing_field import PlayingField
 
 def main(filename, sfunc):
     pfield = PlayingField(filename)
-    print("Start: " + str(pfield.findStartNode()))
+    print("Start: " + str(pfield.find_start_node()))
     print("Using search strategy '{}'\n".format(sfunc.__name__))
     print(pfield)
     path = pfield.search(sfunc)

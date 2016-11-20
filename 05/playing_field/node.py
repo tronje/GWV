@@ -40,6 +40,15 @@ class Node(object):
     def __str__(self):
         return str(self.value)
 
+    def __eq__(self, other):
+        """Equality check; only value and coords matter here.
+        """
+
+        # always check the type first!
+        return type(self) == type(other)\
+                and (self.value == other.value)\
+                and (self.coords == other.coords)
+
     @property
     def x(self):
         """The x-coordinate"""
@@ -50,3 +59,10 @@ class Node(object):
         """The y-coordinate"""
         return self.coords[1]
 
+    def is_portal(self):
+        """Return True if this Node is a portal, False otherwise.
+        Portals are Nodes with numeric values, as opposed to
+        alphabetical characters.
+        """
+
+        return self.value.isdigit()

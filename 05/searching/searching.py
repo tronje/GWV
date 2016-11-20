@@ -32,7 +32,7 @@ def bfs(pfield, start, goal='g', wall='x'):
         current = queue.pop(0)
 
         # iterate over all neighbours
-        for node in neighboursOf(current, pfield):
+        for node in neighbours(current, pfield):
             # if it's a valid node...
             if node.distance == math.inf and node.value != wall:
                 # ...set its parent
@@ -65,7 +65,7 @@ def dfs(pfield, start, goal='g', wall='x'):
         current = stack.pop()
 
         # iterate over neighbours
-        for node in neighboursOf(current, pfield):
+        for node in neighbours(current, pfield):
             if node.distance == math.inf and node.value != wall:
                 node.parent = current
                 node.distance = current.distance + 1
@@ -78,7 +78,7 @@ def dfs(pfield, start, goal='g', wall='x'):
 
     raise ValueError("Goal '{}' not found in pfield!".format(goal))
 
-def astar(pfield, start, goal='g', wall='x', hfunc=heuristics.h_distance):
+def astar(pfield, start, goal='g', wall='x', hfunc=heuristics.h_distance_portals):
     """A-star search, starting at `start`, ending at `goal`.
     """
 
@@ -93,7 +93,7 @@ def astar(pfield, start, goal='g', wall='x', hfunc=heuristics.h_distance):
         current = queue.pop(0)
 
         # iterate over all neighbours
-        for node in neighboursOf(current, pfield):
+        for node in neighbours(current, pfield):
             # if it's a valid node...
             if node.distance == math.inf and node.value != wall:
                 # ...set its parent
@@ -117,7 +117,7 @@ def astar(pfield, start, goal='g', wall='x', hfunc=heuristics.h_distance):
     raise ValueError("Goal '{}' not found in playing field!".format(goal))
 
 
-def neighboursOf(node, pfield, handle_portals=True):
+def neighbours(node, pfield, handle_portals=True):
     """All neighbours of a Node in a PlayingField.
 
     Params:
@@ -154,6 +154,6 @@ def neighboursOf(node, pfield, handle_portals=True):
                     # append to our neighbours the neighbours
                     # of the other portal, but without handling
                     # portals again to avoid infinite recursion
-                    ret += neighboursOf(field, pfield, handle_portals=False)
+                    ret += neighbours(field, pfield, handle_portals=False)
 
     return ret
