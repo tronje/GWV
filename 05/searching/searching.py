@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import math
+from searching import heuristics
 
 """Various search functions
 """
@@ -78,15 +78,7 @@ def dfs(pfield, start, goal='g', wall='x'):
 
     raise ValueError("Goal '{}' not found in pfield!".format(goal))
 
-#
-# Heuristic functions
-#
-
-def _dist_heuristic(pfield, node, goal='g'):
-    gnode = pfield.findNode(goal)
-    return abs(node.x - gnode.x) + abs(node.y - gnode.y)
-
-def astar(pfield, start, goal='g', wall='x', hfunc=_dist_heuristic):
+def astar(pfield, start, goal='g', wall='x', hfunc=heuristics.h_distance):
     """A-star search, starting at `start`, ending at `goal`.
     """
 
