@@ -6,10 +6,13 @@ import searching
 from playing_field import PlayingField
 
 def main(filename, sfunc):
-    field = PlayingField(filename)
-    print("Start: " + str(field.findStartNode()))
-    print(field)
-    field.search(sfunc)
+    pfield = PlayingField(filename)
+    print("Start: " + str(pfield.findStartNode()))
+    print("Using search strategy '{}'\n".format(sfunc.__name__))
+    print(pfield)
+    path = pfield.search(sfunc)
+    print("Path found:")
+    path.pretty()
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

@@ -72,10 +72,14 @@ class PlayingField(object):
             The (length 1) string to start the search at.
         goal : str
             The (length 1) string to end the search at.
+
+        Returns:
+        --------
+        Path object.
         """
         node = sfunc(self, self.findStartNode())
         path = Path(node, self)
-        path.pretty()
+        return path
 
     @property
     def environment(self):
