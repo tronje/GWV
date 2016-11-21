@@ -6,7 +6,7 @@ from searching import heuristics
 """Various search functions
 """
 
-def bfs(pfield, start, goal='g', wall='x'):
+def bfs(pfield, start, goal='g', wall='x', info=False):
     """Breadth first search, starting at `start`, ending at `goal`.
 
     Params:
@@ -27,7 +27,14 @@ def bfs(pfield, start, goal='g', wall='x'):
     # a list in python can be used just like a queue
     queue = [start]
 
+    # count number of expansion operations and max queue size
+    ops = 0
+    max_len = 0
+
     while len(queue) > 0:
+        if len(queue) > max_len:
+            max_len = len(queue)
+
         # pop(0) is the same as dequeue
         current = queue.pop(0)
 
@@ -42,14 +49,19 @@ def bfs(pfield, start, goal='g', wall='x'):
 
                 # see if we found our goal
                 if node.value == goal:
+                    if info:
+                        print("number of expansion operations: {}".format(ops))
+                        print("max queue length: {}".format(max_len))
+                        print()
                     return node
                 else:
                     # same as enqueue
                     queue.append(node)
+                    ops += 1
 
     raise ValueError("Goal '{}' not found in playing field!".format(goal))
 
-def dfs(pfield, start, goal='g', wall='x'):
+def dfs(pfield, start, goal='g', wall='x', info=False):
     """Depth first search, starting at `start`, ending at `goal`.
     """
 
@@ -58,7 +70,14 @@ def dfs(pfield, start, goal='g', wall='x'):
     # a list in python can be used just like a stack
     stack = [start]
 
+    # count number of expansion operations and max stack size
+    ops = 0
+    max_len = 0
+
     while len(stack) > 0:
+        if len(stack) > max_len:
+            max_len = len(stack)
+
         # note: pop() is the last element
         # as long as we use append() to add elements,
         # the stack behaviour is guaranteed
@@ -71,14 +90,25 @@ def dfs(pfield, start, goal='g', wall='x'):
                 node.distance = current.distance + 1
 
                 if node.value == goal:
+                    if info:
+                        print("number of expansion operations: {}".format(ops))
+                        print("max stack size: {}".format(max_len))
+                        print()
                     return node
                 else:
                     # same as push()
                     stack.append(node)
+                    ops += 1
 
     raise ValueError("Goal '{}' not found in pfield!".format(goal))
 
-def astar(pfield, start, goal='g', wall='x', hfunc=heuristics.h_distance_portals):
+def astar(
+        pfield,
+        start,
+        goal='g',
+        wall='x',
+        hfunc=heuristics.h_distance_portals,
+        info=False):
     """A-star search, starting at `start`, ending at `goal`.
     """
 
@@ -88,7 +118,14 @@ def astar(pfield, start, goal='g', wall='x', hfunc=heuristics.h_distance_portals
     # a list in python can be used just like a queue
     queue = [start]
 
+    # count number of expansion operations and max queue length
+    ops = 0
+    max_len = 0
+
     while len(queue) > 0:
+        if len(queue) > max_len:
+            max_len = len(queue)
+
         # pop(0) is the same as dequeue
         current = queue.pop(0)
 
@@ -106,10 +143,15 @@ def astar(pfield, start, goal='g', wall='x', hfunc=heuristics.h_distance_portals
 
                 # see if we found our goal
                 if node.value == goal:
+                    if info:
+                        print("number of expansion operations: {}".format(ops))
+                        print("max queue length: {}".format(max_len))
+                        print()
                     return node
                 else:
                     # same as enqueue
                     queue.append(node)
+                    ops += 1
 
                     # sort by distance to simulate a priority queue
                     queue.sort(key=lambda x: x.est_cost)

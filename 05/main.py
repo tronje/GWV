@@ -2,17 +2,25 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import time
 import searching
 from playing_field import PlayingField
 
 def main(filename, sfunc):
     pfield = PlayingField(filename)
+
     print("Start: " + str(pfield.find_start_node()))
     print("Using search strategy '{}'\n".format(sfunc.__name__))
     print(pfield)
-    path = pfield.search(sfunc)
+
+    t1 = time.process_time()
+    path = pfield.search(sfunc, info=True)
+    t2 = time.process_time()
+
     print("Path found:")
     path.pretty()
+
+    print("time taken: {}s".format(t2 - t1))
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
