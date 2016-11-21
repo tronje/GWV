@@ -20,7 +20,7 @@ def h_distance_portals(pfield, node, goal='g'):
         # distance when going through the portal
         pdist = abs(pnode.x - gnode.x) + abs(pnode.y - gnode.y) + 1 
 
-        # distance when without using the portal
+        # distance without using the portal
         dist = abs(node.x - gnode.x) + abs(node.y - gnode.y)
 
         # return the minimum
