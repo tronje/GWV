@@ -39,6 +39,9 @@ class Path(list):
             ret += str(node.coords)
         return ret
 
+    def __len__(self):
+        return len(self._nodes)
+
     def pretty(self, exclude=['s', 'g']):
         """Prettily print the path through the given
         PlayingField.

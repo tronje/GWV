@@ -17,7 +17,7 @@ def main(filename, sfunc):
     path = pfield.search(sfunc, info=True)
     t2 = time.process_time()
 
-    print("Path found:")
+    print("Path found with length {}:".format(len(path)))
     path.pretty()
 
     print("time taken: {}s".format(t2 - t1))
