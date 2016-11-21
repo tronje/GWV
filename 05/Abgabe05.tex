@@ -1,0 +1,56 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[hidelinks]{hyperref}
+\usepackage{minted}
+
+\author{Finn-Lasse Jörgensen, Frederik Wille, Tronje Krabbe}
+\title{Tutorial 5: Searching}
+\begin{document}
+\maketitle
+
+
+\section*{Exercise 5.2 (Heuristic Search)}
+\subsection*{1.}
+Unsere Heuristik-Funktion misst einfach die Distanz zum Ziel in der `Luftlinie'.
+In einem 2D Labyrinth gibt es nicht viele Möglichkeiten, eine gute Heuristik aufzustellen.
+
+\subsection*{2.}
+Damit die Heuristik Portale unterstützt, muss sie eigentlich nur das Minimum der Distanz
+des gegebenen Portal-Knotens und die seines Partner-Knotens (plus eins) zurückgeben:
+
+\begin{minted}[fontsize=\footnotesize]{python}
+def h_distance_portals(pfield, node, goal='g'):
+    gnode = pfield.find_node(goal)
+
+    # see if we've got a portal
+    if node.is_portal():
+        # find the partner node
+        pnode = pfield.find_portal_exit(node)
+
+        # distance when going through the portal
+        pdist = abs(pnode.x - gnode.x) + abs(pnode.y - gnode.y) + 1 
+
+        # distance without using the portal
+        dist = abs(node.x - gnode.x) + abs(node.y - gnode.y)
+
+        # return the minimum
+        return min(dist, pdist)
+
+    # default behaviour
+    return abs(node.x - gnode.x) + abs(node.y - gnode.y)
+\end{minted}
+
+\subsection*{3.}
+Wenn alle Knoten erkundet wurden, und noch kein Ziel gefunden wurde, bricht unser Programm mit einer Exception ab.
+
+\subsection*{4.}
+
+\subsection*{6.}
+Hierfür mussten wir nichts weiter ändern, das Programm funktioniert standardmäßig so.
+
+\end{document}
