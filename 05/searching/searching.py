@@ -122,6 +122,9 @@ def astar(
     ops = 0
     max_len = 0
 
+    # find the goal node to use with the heuristic function later
+    gnode = pfield.find_node(goal)
+
     while len(queue) > 0:
         if len(queue) > max_len:
             max_len = len(queue)
@@ -139,7 +142,7 @@ def astar(
                 node.distance = current.distance + 1
                 # ...and estimate the cost for the entire path,
                 # if this node were in fact part of it.
-                node.est_cost = node.distance + hfunc(pfield, node)
+                node.est_cost = node.distance + hfunc(pfield, node, gnode)
 
                 # see if we found our goal
                 if node.value == goal:
