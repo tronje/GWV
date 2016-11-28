@@ -16,19 +16,52 @@
 
 \section*{Exercise 6.1 (Search and Parsing)}
 \begin{itemize}
-\item
-\begin{itemize}
-\item{a)}
-\begin{itemize}
-\item Left-Arc: Pop ein Element vom Stack und erzeuge eine neue Kante auf dieses Element vom nächsten Input Token.
-\item Right-Arc: Push ein Input Token auf den Stack und erzeuge eine neue Kante von dem Token auf das erste Element des Stacks.
-\item Reduce: Pop ein Element vom Stack.
-\item Shift: Push das nächste Input Token auf den Stack.
-\end{itemize}
-\item{b)}
-Der Algorithmus terminiert, sobald die Liste an Input Tokens leer ist.
-\item{c)}
-\end{itemize}
+    \item[1.]
+        \begin{itemize}
+            \item[a)]
+                \begin{enumerate}
+                    \item Left-Arc: Pop ein Element vom Stack und erzeuge eine
+                        neue Kante auf dieses Element vom nächsten Input-Token.
+                    \item Right-Arc: Push ein Input-Token auf den Stack und
+                        erzeuge eine neue Kante von dem Token auf das erste
+                        Element des Stacks.
+                    \item Reduce: Pop ein Element vom Stack.
+                    \item Shift: Push das nächste Input Token auf den Stack.
+                \end{enumerate}
+            \item[b)]
+                Der Algorithmus terminiert, sobald die Liste an Input-Tokens leer ist.
+            \item[c)]
+                \begin{itemize}
+                    \item \textbf{azyklisch und zusammenhängend}
+                        Der Graph darf weder Zyklen noch Partitionen enthalten,
+                        da es sich sonst nicht um einen Baum handeln würde.
+                    \item \textbf{projective}
+                        Aus dem Paper: \quote{A dependency graph is projective iff every dependent node is graph adjacent to its head.}
+                \end{itemize}
+        \end{itemize}
+    \item[2.]
+        \begin{itemize}
+            \item Die search states sind Tripel der Form $ \langle S, I, A \rangle $,
+                wobei $S$ der Stack ist, $I$ der Input-Stack und $A$ die Liste
+                der Arc-Relationen.
+            \item Der start state ist ein state in dem $S$ leer ist, $I$ voll
+                mit der Input-List, und $A$ ebenfalls leer, da noch keine
+                Relationen gefunden wurden.
+            \item Ein goal state wurde erreicht, wenn $I$ leer ist und $A$
+                `well formed'.
+            \item Der search state könnte vor dem Parsen erstellt werden,
+                was allerdings nicht effektiv wäre, da das Erstellen
+                des search state mehr Aufwand ist, als das Suchen selbst.
+            \item Der Algorithmus terminiert in linearer Zeit! Angenommen,
+                $n$ ist die Kardinalität von $I$, so terminiert er nach
+                $2n$ Transitionen.
+            \item Wir wissen, dass jeder Pfad höchstens $2n$ states lang sein kann.
+                Im worst case müssten wir sowohl mit BFS als auch mit DFS
+                alle Pfade ablaufen.
+                Für A* eine Heuristik zu finden, ist ziemlich schwer.
+                Insgesamt ist der Algorithmus wohl sehr viel besser,
+                als die Verfahren, die wir bereits kennen.
+        \end{itemize}
 \end{itemize}
 
 \end{document}
