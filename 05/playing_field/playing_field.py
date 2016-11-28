@@ -61,7 +61,14 @@ class PlayingField(object):
 
         return ret
 
-    def search(self, sfunc, start='s', goal='g', wall='x', info=False):
+    def search(
+            self,
+            sfunc,
+            start='s',
+            goal='g',
+            wall='x',
+            info=False,
+            progress=False):
         """Search through the playing field.
 
         Params:
@@ -78,7 +85,14 @@ class PlayingField(object):
         Path object.
         """
 
-        node = sfunc(self, self.find_node(start), goal=goal, wall=wall, info=info)
+        node = sfunc(
+                self,
+                self.find_node(start),
+                goal=goal,
+                wall=wall,
+                info=info,
+                progress=progress)
+
         path = Path(node, self)
         return path
 

@@ -2,13 +2,14 @@
 
 import math
 import time
+import sys
 from searching import heuristics
 from playing_field import Path
 
 """Various search functions
 """
 
-def bfs(pfield, start, goal='g', wall='x', info=False):
+def bfs(pfield, start, goal='g', wall='x', info=False, progress=False):
     """Breadth first search, starting at `start`, ending at `goal`.
 
     Params:
@@ -57,13 +58,15 @@ def bfs(pfield, start, goal='g', wall='x', info=False):
                         print()
                     return node
                 else:
+                    if progress:
+                        progress_print(node, pfield)
                     # same as enqueue
                     queue.append(node)
                     ops += 1
 
     raise ValueError("Goal '{}' not found in playing field!".format(goal))
 
-def dfs(pfield, start, goal='g', wall='x', info=False):
+def dfs(pfield, start, goal='g', wall='x', info=False, progress=False):
     """Depth first search, starting at `start`, ending at `goal`.
     """
 
@@ -98,6 +101,8 @@ def dfs(pfield, start, goal='g', wall='x', info=False):
                         print()
                     return node
                 else:
+                    if progress:
+                        progress_print(node, pfield)
                     # same as push()
                     stack.append(node)
                     ops += 1
@@ -110,7 +115,8 @@ def astar(
         goal='g',
         wall='x',
         hfunc=heuristics.h_distance_portals,
-        info=False):
+        info=False,
+        progress=False):
     """A-star search, starting at `start`, ending at `goal`.
     """
 
@@ -154,11 +160,8 @@ def astar(
                         print()
                     return node
                 else:
-                    # p = Path(node, pfield)
-                    # p.pretty()
-                    # time.sleep(0.3)
-                    # print("\033[1;J")
-                    # same as enqueue
+                    if progress:
+                        progress_print(node, pfield)
                     queue.append(node)
                     ops += 1
 
@@ -167,6 +170,11 @@ def astar(
 
     raise ValueError("Goal '{}' not found in playing field!".format(goal))
 
+def progress_print(node, pfield, delay=0.2):
+    p = Path(node, pfield)
+    p.pretty()
+    time.sleep(delay)
+    print('\033[2J')
 
 def neighbours(node, pfield, handle_portals=True):
     """All neighbours of a Node in a PlayingField.

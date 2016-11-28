@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
-class Path(list):
+RED = '\033[31m'
+GREEN = '\033[32m'
+YELLOW = '\033[33m'
+
+RESET = '\033[0m'
+
+class Path(object):
     """Collects a Path of nodes starting with a node
     iterating through parents, until a node without
     a parent is found, which is assumed to be the start.
@@ -39,6 +45,15 @@ class Path(list):
     def __len__(self):
         return len(self._nodes)
 
+    def __getitem__(self, key):
+        if type(key) is not int:
+            return None
+        else:
+            return self._nodes[key]
+
+    def __contains__(self, item):
+        return item in self._nodes
+
     def pretty(self, exclude=['s', 'g']):
         """Prettily print the path through the given
         PlayingField.
@@ -53,13 +68,18 @@ class Path(list):
         # walk over each node in playing field
         for row in self._pfield.env:
             for node in row:
-                # if the node is part of the path...
-                if node in self._nodes:
-                    # ... and it's neither in exclude nor a portal
-                    if node.value in exclude or node.value.isdigit():
-                        continue
-                    # ... print a dot!
-                    print('.', end='')
+                # if the node is part of the path but not
+                # in the exclude list and not a portal...
+                if (node in self and node.value not in exclude
+                        and not node.is_portal()):
+                    # ...print a green dot
+                    print(GREEN + '.' + RESET, end='')
+                # print portals yellow
+                elif node.is_portal():
+                    print(YELLOW + str(node) + RESET, end='')
+                # print walls in red
+                elif node.value == 'x':
+                    print(RED + str(node) + RESET, end='')
                 else:
                     # otherwise, print the node
                     print(node, end='')
