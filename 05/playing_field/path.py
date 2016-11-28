@@ -23,15 +23,12 @@ class Path(list):
 
         # initialize the path as a list of nodes
         # (containing only the startnode at first)
-        nodes = [startnode]
+        self._nodes = [startnode]
 
         # add all parents to build the path
         # insert at 0 ('prepend') to get the correct order
-        while nodes[0].parent != None:
-            nodes.insert(0, nodes[0].parent)
-
-        # assign to self
-        self._nodes = nodes
+        while self._nodes[0].parent != None:
+            self._nodes.insert(0, self._nodes[0].parent)
 
     def __str__(self):
         ret = ""
@@ -53,16 +50,19 @@ class Path(list):
             drawing the path.
         """
 
-        # save original environment to revert changes later
-        env = self._pfield.env.copy()
-
-        for node in self._nodes:
-            if node.value in exclude or node.value.isdigit():
-                continue
-            self._pfield.env[node.x][node.y] = '.'
-
-        print(self._pfield)
-
-        # reset env
-        self._pfield.env = env
+        # walk over each node in playing field
+        for row in self._pfield.env:
+            for node in row:
+                # if the node is part of the path...
+                if node in self._nodes:
+                    # ... and it's neither in exclude nor a portal
+                    if node.value in exclude or node.value.isdigit():
+                        continue
+                    # ... print a dot!
+                    print('.', end='')
+                else:
+                    # otherwise, print the node
+                    print(node, end='')
+            # print a newline at the end of each row
+            print()
 

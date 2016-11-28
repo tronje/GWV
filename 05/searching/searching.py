@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import math
+import time
 from searching import heuristics
+from playing_field import Path
 
 """Various search functions
 """
@@ -152,6 +154,10 @@ def astar(
                         print()
                     return node
                 else:
+                    # p = Path(node, pfield)
+                    # p.pretty()
+                    # time.sleep(0.3)
+                    # print("\033[1;J")
                     # same as enqueue
                     queue.append(node)
                     ops += 1
