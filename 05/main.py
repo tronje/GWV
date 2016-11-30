@@ -35,7 +35,7 @@ def main(args):
             "The file you specified ('{}') does not exist!\n"
             .format(args.filename)
         )
-        sys.exit(1)
+        return 1
 
     # grab our search function from the searches dictionary
     # provided by the searching module
@@ -64,6 +64,8 @@ def main(args):
     path.pretty()
     print("time taken: {}s".format(delta_t))
 
+    return 0
+
 if __name__ == "__main__":
     # use argparse to parse command line arguments
 
@@ -80,7 +82,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ## pass them on to main to do its thing
-    main(args)
+    exit_status = main(args)
 
     # exit with a 0, which is nice
-    sys.exit(0)
+    sys.exit(exit_status)
+

@@ -36,7 +36,12 @@ class PlayingField(object):
                 for char_index, char in enumerate(line):
                     if char != '\n':
                         temp.append(Node(char, (line_index, char_index)))
-                self._environment.append(temp)
+                self.env.append(temp)
+
+        # check validity (field needs to be rectangular)
+        for row in self.env:
+            if len(row) != len(self.env[0]):
+                raise ValueError("Invalid labyrinth!")
 
     def reset(self):
         """Reset the playing field by re-reading the environment
@@ -77,12 +82,21 @@ class PlayingField(object):
             The search function to use.
         start : str
             The (length 1) string to start the search at.
+            Default is 's'.
         goal : str
             The (length 1) string to end the search at.
+            Default is 'g'.
+        wall : str
+            The (length 1) string that represents wall nodes.
+            Default is 'x'.
+        info : bool
+            Wether to print some more verbose information.
+        progress : bool
+            Wether to animate the search, thereby showing the progress made.
 
         Returns:
         --------
-        Path object.
+        Path object of the path from start to goal.
         """
 
         node = sfunc(
@@ -91,7 +105,8 @@ class PlayingField(object):
                 goal=goal,
                 wall=wall,
                 info=info,
-                progress=progress)
+                progress=progress
+            )
 
         path = Path(node, self)
         return path
