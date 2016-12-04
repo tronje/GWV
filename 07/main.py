@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from arc_consistency import Node, Network
+from arc_consistency import Node, Network, Constraint
+from make_constraints import make_constraints
 
 def _read_words(filename):
     wlist = []
@@ -17,33 +18,28 @@ def _make_network():
 
     nodes = []
 
-    nodes.append(Node(meta={'position': (0,0)}))
-    nodes.append(Node(meta={'position': (1,0)}))
-    nodes.append(Node(meta={'position': (2,0)}))
-    nodes.append(Node(meta={'position': (0,1)}))
-    nodes.append(Node(meta={'position': (1,1)}))
-    nodes.append(Node(meta={'position': (2,1)}))
-    nodes.append(Node(meta={'position': (0,2)}))
-    nodes.append(Node(meta={'position': (1,2)}))
-    nodes.append(Node(meta={'position': (2,2)}))
+    nodes.append(Node(meta={'name': 'A1'}))
+    nodes.append(Node(meta={'name': 'A2'}))
+    nodes.append(Node(meta={'name': 'A3'}))
+    nodes.append(Node(meta={'name': 'D1'}))
+    nodes.append(Node(meta={'name': 'D2'}))
+    nodes.append(Node(meta={'name': 'D3'}))
 
+    # every node's domain contains all words
     for node in nodes:
-        # grab our position
-        pos = node.meta['position']
-
-        # for every word, add the letter at the corresponding
-        # place to the domain; keep in mind that the domain
-        # is a set and cannot contain duplicates
-        for w in wlist:
-            node.domain.add(w[pos[0]])
-            node.domain.add(w[pos[1]])
+        for word in wlist:
+            node.domain.add(word)
 
     nwork = Network(nodes)
     return nwork
 
 def main():
-    print(_make_network())
-    # _make_network()
+    nwork = _make_network()
+    make_constraints(nwork)
+    nwork.gac()
+
+    for node in nwork.nodes:
+        print(node.domain)
 
 if __name__ == "__main__":
     main()

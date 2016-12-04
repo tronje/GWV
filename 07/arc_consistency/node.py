@@ -6,6 +6,8 @@ class Node(object):
             self.domain = domain
         self.value = value
         self.meta = meta
+        self.constraints = set()
+        self.arcs = set()
 
     def __str__(self):
         return str(self.value) + '\n' \
