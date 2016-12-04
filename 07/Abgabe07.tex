@@ -5,16 +5,26 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{svg}
 \usepackage[hidelinks]{hyperref}
-\usepackage{minted}
 
 \author{Finn-Lasse Jörgensen, Frederik Wille, Tronje Krabbe}
 \title{Tutorial 7: Constraint Satisfaction}
 \begin{document}
 \maketitle
 
-
 \section*{Exercise 7.1 (Constraint)}
-
+\begin{itemize}
+\item
+Jeder Buchstabe wird durch eine Variable mit der Domäne 0-9 beschrieben.
+Jede Spalte ist ein Constraint zwischen den drei Buchstaben der Spalte, wobei die Summe der beiden Oberen Buchstaben kongruent zu dem Wert des Unteren Buchstaben modulo 10 sein muss.
+In den Constraints muss zusätzlich bedacht werden, dass in der vorherigen Spalte ein Übertrag entstanden sein kann, den wir durch ein $OR$ in das Constraint einbringen.\\
+\begin{figure}[ht]
+    % \includegraphics[width=\textwidth]{gwv07_network.png}
+    \includegraphics[scale=0.46]{gwv07_network.png}
+    \caption{Constraint Network}
+    \label{network}
+\end{figure}
+\end{itemize}
 
 \end{document}
