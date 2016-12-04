@@ -1,10 +1,17 @@
 class Arc(object):
-    def __init__(self, node, constraint):
-        """An arc points from a node to a constraint/
-        """
+    """An arc points from a node to a constraint
+    """
 
+    def __init__(self, node, constraint):
         self.node = node
         self.constraint = constraint
+        self._consistent = None
+
+    @property
+    def consistent(self):
+        if self._consistent is None:
+            self._consistent = self.is_consistent()
+        return self._consistent
 
     def other_node(self):
         return self.constraint.other_node(self.node)
@@ -40,3 +47,5 @@ class Arc(object):
         # remove non-consistent elements from domain
         for elem in non_consistent:
             self.node.domain.remove(elem)
+
+        self._consistent = True

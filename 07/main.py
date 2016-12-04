@@ -24,11 +24,23 @@ def _make_network():
     nodes.append(Node(meta={'name': 'D1'}))
     nodes.append(Node(meta={'name': 'D2'}))
     nodes.append(Node(meta={'name': 'D3'}))
+    # nodes.append(Node(meta={'position': (0, 0)}))
+    # nodes.append(Node(meta={'position': (0, 1)}))
+    # nodes.append(Node(meta={'position': (0, 2)}))
+    # nodes.append(Node(meta={'position': (1, 0)}))
+    # nodes.append(Node(meta={'position': (1, 1)}))
+    # nodes.append(Node(meta={'position': (1, 2)}))
+    # nodes.append(Node(meta={'position': (2, 0)}))
+    # nodes.append(Node(meta={'position': (2, 1)}))
+    # nodes.append(Node(meta={'position': (2, 2)}))
 
     # every node's domain contains all words
     for node in nodes:
+        # pos = node.meta['position']
         for word in wlist:
             node.domain.add(word)
+            # node.domain.add(word[pos[0]])
+            # node.domain.add(word[pos[1]])
 
     nwork = Network(nodes)
     return nwork
@@ -39,7 +51,9 @@ def main():
     nwork.gac()
 
     for node in nwork.nodes:
-        print(node.domain)
+        print(node.meta['name'], node.domain)
+    # for node in nwork.nodes:
+    #     print(node)
 
 if __name__ == "__main__":
     main()

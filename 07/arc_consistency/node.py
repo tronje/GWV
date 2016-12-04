@@ -1,4 +1,7 @@
 class Node(object):
+    """A node, or variable, within a CSP network.
+    """
+
     def __init__(self, domain=None, value=None, meta={}):
         if domain is None:
             self.domain = set()

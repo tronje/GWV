@@ -1,6 +1,9 @@
 from arc_consistency import Arc
 
 class Network(object):
+    """A CSP-network, consisting of nodes, arcs and constraints.
+    """
+
     def __init__(self, nodes):
         self.nodes = nodes
         self._arcs = None
@@ -35,15 +38,6 @@ class Network(object):
             if node.meta[meta_key] == meta_value:
                 return node
 
-    def add_constraint(self, constraint):
-        self.constraints.add(constraint)
-
-        # add the constraint to each node as well,
-        # so they know about the constraints they are
-        # involved in
-        for node in constraint.nodes:
-            node.constraints.add(constraint)
-
     def gac(self):
         """Generalized arc consistency algorithm"""
 
@@ -52,13 +46,34 @@ class Network(object):
 
         # while todo_arcs isn't empty
         while len(todo_arcs) > 0:
+            # grab an arc
             arc = todo_arcs.pop()
-            if not arc.is_consistent():
+
+            # if it's not consistent...
+            if not arc.consistent:
+                # ... make it consistent
                 arc.make_consistent()
 
+                # ... and find all arcs that may have become
+                # inconsistent as a result.
+                # add those to the todo arcs
                 for node in self.nodes:
-                    for other_arc in node.arcs:
-                        if other_arc.other_node() == arc.node:
-                            todo_arcs.add(other_arc)
+                    for narc in node.arcs:
+                        # the node opposite the arc's node
+                        # needs to be our current node,
+                        # and it needs to be from a different
+                        # constraint!
+                        if (narc.other_node() == arc.node
+                                and narc.constraint != arc.constraint):
+                            todo_arcs.add(narc)
 
-            print(len(todo_arcs))
+            # print(len(todo_arcs))
+            # p = True
+            # for node in self.nodes:
+            #     if len(node.domain) > 4:
+            #         p = False
+            #         break
+            #
+            # if p:
+            #     for node in self.nodes:
+            #         print(node.meta['name'], node.domain)

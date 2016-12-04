@@ -1,4 +1,7 @@
 class Constraint(object):
+    """A constraint describes a condition between two or more nodes.
+    """
+
     def __init__(self, nodes, cfunc):
         self.nodes = nodes
         self.cfunc = cfunc
