@@ -2,6 +2,7 @@
 *.aux
 *.log
 *.out
+*.html
 _minted*
 __pycache__
 GWV_blatt_*.pdf
