@@ -1,11 +1,11 @@
 from arc_consistency import Arc
 
 class Network(object):
-    """A CSP-network, consisting of nodes, arcs and constraints.
+    """A CSP-network, consisting of variables, arcs and constraints.
     """
 
-    def __init__(self, nodes):
-        self.nodes = nodes
+    def __init__(self, variables):
+        self.variables = variables
         self._arcs = None
         self.constraints = set()
 
@@ -17,26 +17,32 @@ class Network(object):
 
     def __str__(self):
         ret = ""
-        for node in self.nodes:
-            ret += str(node)
+        for variable in self.variables:
+            ret += str(variable)
             ret += '\n'
         return ret
 
     def _make_arcs(self):
         self._arcs = set()
         for constraint in self.constraints:
-            for node in constraint.nodes:
-                new_arc = Arc(node, constraint)
+            for variable in constraint.variables:
+                new_arc = Arc(variable, constraint)
                 self.arcs.add(new_arc)
-                # register the arc with the node as well,
+                # register the arc with the variable as well,
                 # so it knows about its arcs
-                node.arcs.add(new_arc)
+                variable.arcs.add(new_arc)
 
-    def get_node(self, meta_key, meta_value):
-        """Find a node based on its meta info"""
-        for node in self.nodes:
-            if node.meta[meta_key] == meta_value:
-                return node
+    def get_variable(self, meta_key, meta_value):
+        """Find a variable based on its meta info"""
+        for variable in self.variables:
+            if variable.meta[meta_key] == meta_value:
+                return variable
+
+    def is_solved(self):
+        for variable in self.variables:
+            if len(variable.domain) != 1:
+                return False
+        return True
 
     def gac(self):
         """Generalized arc consistency algorithm"""
@@ -50,30 +56,20 @@ class Network(object):
             arc = todo_arcs.pop()
 
             # if it's not consistent...
-            if not arc.consistent:
+            if not arc.is_consistent():
                 # ... make it consistent
                 arc.make_consistent()
 
                 # ... and find all arcs that may have become
                 # inconsistent as a result.
                 # add those to the todo arcs
-                for node in self.nodes:
-                    for narc in node.arcs:
-                        # the node opposite the arc's node
-                        # needs to be our current node,
+                for variable in self.variables:
+                    for narc in variable.arcs:
+                        # the variable opposite the arc's variable
+                        # needs to be our current variable,
                         # and it needs to be from a different
                         # constraint!
-                        if (narc.other_node() == arc.node
-                                and narc.constraint != arc.constraint):
+                        if (narc.other_variable() == arc.variable
+                           and narc.constraint != arc.constraint):
                             todo_arcs.add(narc)
 
-            # print(len(todo_arcs))
-            # p = True
-            # for node in self.nodes:
-            #     if len(node.domain) > 4:
-            #         p = False
-            #         break
-            #
-            # if p:
-            #     for node in self.nodes:
-            #         print(node.meta['name'], node.domain)

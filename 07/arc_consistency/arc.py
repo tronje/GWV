@@ -1,25 +1,19 @@
 class Arc(object):
-    """An arc points from a node to a constraint
+    """An arc points from a variable to a constraint
     """
 
-    def __init__(self, node, constraint):
-        self.node = node
+    def __init__(self, variable, constraint):
+        self.variable = variable
         self.constraint = constraint
-        self._consistent = None
 
-    @property
-    def consistent(self):
-        if self._consistent is None:
-            self._consistent = self.is_consistent()
-        return self._consistent
-
-    def other_node(self):
-        return self.constraint.other_node(self.node)
+    def other_variable(self):
+        return self.constraint.other_variable(self.variable)
 
     def is_consistent(self):
-        other_node = self.constraint.other_node(self.node)
-        for elem in self.node.domain:
-            for other in other_node.domain:
+        other_variable = self.other_variable()
+
+        for elem in self.variable.domain:
+            for other in other_variable.domain:
                 if self.constraint.is_satisfied([elem, other]):
                     break
             else:
@@ -32,11 +26,11 @@ class Arc(object):
 
     def make_consistent(self):
         non_consistent = []
-        other_node = self.constraint.other_node(self.node)
+        other_variable = self.other_variable()
 
         # find non-consistent elements
-        for elem in self.node.domain:
-            for other in other_node.domain:
+        for elem in self.variable.domain:
+            for other in other_variable.domain:
                 if self.constraint.is_satisfied([elem, other]):
                     break
             else:
@@ -46,6 +40,5 @@ class Arc(object):
 
         # remove non-consistent elements from domain
         for elem in non_consistent:
-            self.node.domain.remove(elem)
+            self.variable.domain.remove(elem)
 
-        self._consistent = True
