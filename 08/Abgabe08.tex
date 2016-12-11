@@ -14,6 +14,18 @@
 \maketitle
 
 \section*{Exercise 8.2: CSI Stellingen}
-Hello, World!
-
+\begin{itemize}
+\item Assumables:\\
+    Gärtner hat im Garten gearbeitet: $ g\_garden $\\
+    Butler hat in der Garage gearbeitet: $ b\_garage $\\
+\item Oberservations:\\
+    Gärtner hat keinen Dreck an seinen Händen: $ \neg g\_dirt $ \\
+    Butler hat Dreck an seinen Händen: $ b\_dirt $ \\
+\item Rules:\\
+    If the gardener worked in the garden all day, he will have dirt on his hands: $ g\_dirt \leftarrow g\_garden $\\
+    If the butler worked in the garage all day, he will have dirt on his hands: $ b\_dirt \leftarrow b\_garage $
+\item Integrity Constraints:\\
+    The gardener has either dirt on his hands or he has no dirt on his hands: $ false \leftarrow g\_dirt \land \neg g\_dirt $\\
+    The butler has either dirt on his hands or he has no dirt on his hands: $ false \leftarrow b\_dirt \land \neg b\_dirt $\\
+\end{itemize}
 \end{document}
