@@ -42,4 +42,41 @@ $ KB \models \neg g\_dirt \lor \neg b\_dirt $ \\
 The integrity constraints define that each person has either clean or dirty
 hands. The obsevations tell us that the gardener has clean hands.
 Considering this knowledge, we can conclude that the gardener has to be the murderer.
+
+\section*{Exercise 8.3 : ( Diagnosis )}
+\begin{itemize}
+\item Assumables:\\
+    Battery is charged: $ bat\_ok $ \\
+    Ignition key works: $ ign\_ok $ \\
+    Electric fuel regulation works: $ fureg\_ok $ \\
+    Starter works: $ start\_ok $ \\
+    Fuel tank ist filled: $ tank\_ok $ \\
+    Fuel pump works: $ pump\_ok $ \\
+    Filter is not clogged: $ filt\_ok $ \\
+    Engine is fine: $ eng\_ok $ \\
+\item Observations: \\
+    One of the noises is not hearable. A component making a noise is working.
+\item Rules: \\
+    % If the battery is charged, the ignition key will work.
+    % If the battery is charged and the ignition key works, the electronic fuel regulation will work.
+    % If the ignition key works, the starter will work.
+    % If the fuel tank is filled and the electronic fuel regulation works, the fuel pump will work.
+    % If the fuel pump works, the filter will work.
+    % If the starter and the filter work, the engine will work.
+    If the starter works, the ignition key works.
+    $ ign\_ok \leftarrow star\_ok $ \\
+    If the ignition key works, the battery works.
+    $ bat\_ok \leftarrow ign\_ok $ \\
+    If the engine works, the starter works and the filter is not clogged. \\
+    $ start\_ok \leftarrow eng\_ok $ \\
+    $ filter\_ok \leftarrow eng\_ok $ \\
+    If the filter is not clogged, the fuel pump works.
+    $ pump\_ok \leftarrow filt\_ok $
+    If the fuel pump works, the fuel tank is filled and the electronic regulation works.\\
+    $ tank\_ok \leftarrow pump\_ok $ \\
+    $ fureg\_ok \leftarrow pump\_ok $ \\
+    If the electronic fuel regulation works, the ingition key works and the battery is charged.\\
+    $ ign\_ok \leftarrow fureg\_ok $ \\
+    $ bat\_ok \leftarrow fureg\_ok $ \\
+\end{itemize}
 \end{document}
