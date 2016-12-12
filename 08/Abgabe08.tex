@@ -19,20 +19,27 @@
     Gardener has been working in the garden all day: $ g\_garden $\\
     Butler has been fixing the car in the garage all day: $ b\_garage $\\
 \item Oberservations:\\
-    Gardener has dno irt on his hands: $ \neg g\_dirt $ \\
+    Gardener has no dirt on his hands: $ \neg g\_dirt $ \\
     Butler has dirt on his hands: $ b\_dirt $ \\
 \item Rules:\\
-    If the gardener worked in the garden all day, he will have dirt on his hands: $ g\_dirt \leftarrow g\_garden $\\
-    If the butler worked in the garage all day, he will have dirt on his hands: $ b\_dirt \leftarrow b\_garage $
+    If the gardener worked in the garden all day, he will have dirt on
+    his hands: $ g\_dirt \leftarrow g\_garden $\\
+    If the butler worked in the garage all day, he will have dirt on
+    his hands: $ b\_dirt \leftarrow b\_garage $
 \item Integrity Constraints:\\
-    The gardener has either dirt on his hands or he has no dirt on his hands: $ false \leftarrow g\_dirt \land \neg g\_dirt $\\
-    The butler has either dirt on his hands or he has no dirt on his hands: $ false \leftarrow b\_dirt \land \neg b\_dirt $\\
+    The gardener has either dirt on his hands or he has no dirt on his
+    hands: $ false \leftarrow g\_dirt \land \neg g\_dirt $\\
+    The butler either has dirt on his hands or he has no dirt on
+    his hands: $ false \leftarrow b\_dirt \land \neg b\_dirt $\\
 \end{itemize}
-Since there are only two suspects, one of them must be lying. This is the minimal conflict:
+Since there are only two suspects, one of them must be lying.
+This is the minimal conflict:
 $ \{ g\_garden, b\_garage \} $.\\
-Thus, it follows:
+Thus follows:
 $ KB \models \neg g\_garden \lor \neg b\_garage $\\
-By applying the rules we know that the one without dirt on his hands is lying:
+By applying the rules, we know that the person without dirt on their hands is lying:
 $ KB \models \neg g\_dirt \lor \neg b\_dirt $ \\
-The integrity constraints define that both can either have dirt on their hands or they don't have dirt on their hands. The observations tell us that the gardener has no dirt on his hands. Following this knowledge, we can see that the gardener has to be the murder.
+The integrity constraints define that each person has either clean or dirty
+hands. The obsevations tell us that the gardener has clean hands.
+Considering this knowledge, we can conclude that the gardener has to be the murderer.
 \end{document}
