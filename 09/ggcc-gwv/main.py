@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from markov import *
 
 if __name__=="__main__":
@@ -8,4 +9,10 @@ if __name__=="__main__":
     print("Generation Time:",T2-T1)
     while True:
         print(gen_sentence(S))
-        input()
+        cont = input("Continue? ")
+        if cont in ['y', 'Y', 'yes', 'Yes', 'j', 'J', '']:
+            continue
+        else:
+            break
+    print("exiting")
+
