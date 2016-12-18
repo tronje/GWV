@@ -36,7 +36,7 @@ class MarkovConnection(object):
     def get_To(self):
         return self._to
 
-def gen_markovChain2(filename="ggcc-saetze.txt"):
+def gen_markovChain2(filename="ggcc-gwv/ggcc-saetze.txt"):
     F=""
     with open(filename,"r") as f:
         F=f.read()
@@ -72,7 +72,7 @@ def gen_markovChain2(filename="ggcc-saetze.txt"):
     #for i in range(10):
         #print StartMN.getNextRandom().get_To().name
 
-def gen_markovChain(filename="ggcc-saetze.txt"):
+def gen_markovChain(filename="ggcc-gwv/ggcc-saetze.txt"):
     F=""
     with open(filename,"r",encoding="utf8") as f:
         F=f.read()

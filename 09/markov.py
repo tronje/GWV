@@ -90,7 +90,7 @@ class MarkovConnection(object):
         '''
         return self._to
 
-def gen_markovModel2(filename="ggcc-saetze.txt"):
+def gen_markovModel2(filename="ggcc-gwv/ggcc-saetze.txt"):
     '''
     Obsolet
     :param filename:
@@ -129,7 +129,7 @@ def gen_markovModel2(filename="ggcc-saetze.txt"):
             preMN=MN
     return StartMN
 
-def gen_markovModel(filename="ggcc-saetze.txt"):
+def gen_markovModel(filename="ggcc-gwv/ggcc-saetze.txt"):
     '''
     Generate a Markov Model from a given File
     :param filename: Path
