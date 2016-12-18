@@ -1,0 +1,29 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{svg}
+\usepackage[hidelinks]{hyperref}
+
+\author{Finn-Lasse Jörgensen, Frederik Wille, Tronje Krabbe}
+\title{Tutorial 9: Belief Networks}
+\begin{document}
+\maketitle
+
+\section*{Exercise 9.3: Diagnosis}
+
+As the probability for the malfunction of any component is $0.1$, it's probabilty for being functional is $1-0.1 = 0.9$ and to actually work is $0.9$ multiplied by the number of it's dependencies.
+\begin{itemize}
+\item The probability that the battery is working: \\
+    The battery is not dependent on another component so it has a probability of 0.9 for being functional.
+\item The probability that the starter is working: \\
+    The starter is dependent on the ignition key which is dependent on the battery. $ 3*0.9 = 2.7 $
+\item The probability that the engine is working: \\
+    The engine is dependent on all of the other components, so it's probability to work is $ 8 * 0.9 $
+\item The probability that the engine is working after making the observation that the pump is working: \\
+    If the pump is working, the probability of the engine to work is $ 7 * 0.9 $
+\end{itemize}
+\end{document}
