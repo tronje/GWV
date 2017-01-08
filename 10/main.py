@@ -10,8 +10,7 @@ def main(filenames, words):
         last_tag = '$.'
         for word in words:
             last_tag = find_tag_for_word(word, last_tag)
-            print(word)
-            print(last_tag)
+            print(word+'\t'+last_tag)
             print('')
 
 
