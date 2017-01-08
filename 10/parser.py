@@ -20,7 +20,7 @@ def import_tagged_files(filenames):
       occassions
     """
     lines = read_files(filenames)
-    last_tag = None
+    last_tag = '$.'
     for line in lines:
         last_tag = create_tag_from_line(line, last_tag)
     transition_probabilities = calculate_probabilties(transition_count)
