@@ -59,12 +59,12 @@ def parse_args():
     # declare all arguments
     parser.add_argument(
         '-f',
-        nargs='*',
+        nargs='+',
         help='the file to search through'
     )
     parser.add_argument(
         '-w',
-        nargs='*',
+        nargs='+',
         help='produce tags for given words'
     )
 
@@ -74,6 +74,9 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
+    if args.f is None or args.w is None:
+        print("Invalid arguments, use '-h' flag for help!")
+        exit(1)
     exit_status = main(args.f, args.w)
 
     # exit with a 0, which is nice
