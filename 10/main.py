@@ -60,7 +60,7 @@ def parse_args():
     parser.add_argument(
         '-f',
         nargs='+',
-        help='the file to search through'
+        help='the files to search through'
     )
     parser.add_argument(
         '-w',
