@@ -3,14 +3,30 @@ import sys
 import argparse
 
 
+variables = set()
+domains = {}
+
+
 def main(words):
-    pass
+    initialize_variables(words)
+    initialize_full_domains()
+
+
+def initialize_full_domains():
+    for variable in variables:
+        domains[variable] = list(range(0, 10))
+
+
+def initialize_variables(word_list):
+    for word in word_list:
+        for character in word:
+            variables.add(character)
 
 
 def parse_args():
     # use argparse to parse command line arguments
 
-    # init a parser
+    # initialise a parser
     parser = argparse.ArgumentParser(
         description='Cryptoarithmetic Puzzle Solver'
     )
