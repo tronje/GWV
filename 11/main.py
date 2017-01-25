@@ -5,22 +5,52 @@ import argparse
 
 variables = set()
 domains = {}
+columns = []
 
 
-def main(words):
-    initialize_variables(words)
-    initialize_full_domains()
+def main(word_list):
+    initialize_variables(word_list)
+    initialize_domains()
+    initialize_columns(word_list)
 
 
-def initialize_full_domains():
+def initialize_domains():
+    """ Create an entry in domains for each letter with values from 0 to 9.
+    """
     for variable in variables:
         domains[variable] = list(range(0, 10))
 
 
 def initialize_variables(word_list):
+    """ Build a set containing each letter once.
+    """
     for word in word_list:
         for character in word:
             variables.add(character)
+
+
+def initialize_columns(word_list):
+    """
+    """
+    length = find_longest_word(word_list)
+
+    # create each column as a list in columns
+    for i in range(0, len(word_list)+1):
+        columns.append([])
+
+    for word in word_list:
+        for char_index, char in enumerate(word[::-1]):
+            columns[char_index].append(char)
+    columns.reverse()
+
+
+def find_longest_word(word_list):
+    length = 0
+    for word in word_list:
+        new_length = len(word)
+        if length < new_length:
+            length = new_length
+    return length
 
 
 def parse_args():
