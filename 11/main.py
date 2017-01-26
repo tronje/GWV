@@ -35,7 +35,7 @@ def initialize_columns(word_list):
     length = find_longest_word(word_list)
 
     # create each column as a list in columns
-    for i in range(0, len(word_list)+1):
+    for i in range(0, length + 1):
         columns.append([])
 
     for word in word_list:
