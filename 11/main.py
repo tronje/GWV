@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 import sys
 import argparse
+from CSP import *
 
 
 variables = set()
 domains = {}
 columns = []
+constraints = []
 
 
 def main(word_list):
     initialize_variables(word_list)
     initialize_domains()
     initialize_columns(word_list)
+    initialize_constraints(columns)
 
 
 def initialize_domains():
@@ -41,7 +44,17 @@ def initialize_columns(word_list):
     for word in word_list:
         for char_index, char in enumerate(word[::-1]):
             columns[char_index].append(char)
-    columns.reverse()
+
+
+def initialize_constraints(columns):
+    for column in columns:
+        if len(column) >= 1:
+            sum_letter = column[-1]
+            summands = column[: -1]
+            for summand in summands:
+                constraints.append(Constraint(sum_letter, summands, sum))
+
+    return constraints
 
 
 def find_longest_word(word_list):
