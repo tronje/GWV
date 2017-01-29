@@ -1,20 +1,36 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys
 import argparse
-from CSP import *
+from CSP import Constraint
 
 
 variables = set()
 domains = {}
 columns = []
 constraints = []
+arc = []
 
 
 def main(word_list):
     initialize_variables(word_list)
     initialize_domains()
     initialize_columns(word_list)
-    initialize_constraints(columns)
+    initialize_constraints()
+    initialize_arcs()
+
+
+def gac():
+    """Generalized arch consistency algorithm.
+    """
+
+    Dx = [domains[variable].copy() for variable in variables]
+    TDA = arcs.copy()
+
+    while len(TDA) > 0:
+        arc = TDA.pop()
+        # magic
+
+    return Dx
 
 
 def initialize_domains():
@@ -46,15 +62,18 @@ def initialize_columns(word_list):
             columns[char_index].append(char)
 
 
-def initialize_constraints(columns):
+def initialize_constraints():
     for column in columns:
         if len(column) >= 1:
             sum_letter = column[-1]
             summands = column[: -1]
             for summand in summands:
-                constraints.append(Constraint(sum_letter, summands, sum))
+                constraints.append(Constraint(sum_letter, summands))
 
-    return constraints
+
+def initialize_arcs():
+    # TODO lol
+    pass
 
 
 def find_longest_word(word_list):
@@ -84,6 +103,7 @@ def parse_args():
     # gotta parse 'em all
     args = parser.parse_args()
     return args
+
 
 if __name__ == "__main__":
     args = parse_args()
