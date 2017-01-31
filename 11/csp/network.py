@@ -1,4 +1,4 @@
-from arc_consistency import Arc
+from csp import Arc
 
 class Network(object):
     """A CSP-network, consisting of variables, arcs and constraints.
