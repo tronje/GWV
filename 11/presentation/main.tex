@@ -21,7 +21,7 @@
 
 \usepackage{marvosym}
 
-\title{Cryptoarithmetisches Puzzle}
+\title{Cryptoarithmetic Puzzle}
 \subtitle{GWV WiSe 2016/2017}
 \date{\today}
 \date{}
@@ -43,12 +43,12 @@
 
 \begin{frame}[fragile]{Intro}
 
-\begin{BVerbatim}
-        THREE
-      + THREE
-      +  FIVE
-      =ELEVEN
-\end{BVerbatim}
+\begin{verbatim}
+         THREE           56711
+      +  THREE   ->   +  56711
+      +   FIVE        +   8491
+      = ELEVEN        = 121913
+\end{verbatim}
 
 \end{frame}
 
@@ -83,7 +83,6 @@ class Variable(object):
         else:
             self.domain = domain
         self.meta = meta
-        self.constraints = []
         self.arcs = set()
     \end{minted}
 \end{frame}
@@ -184,12 +183,12 @@ class Network(object):
 
 \begin{frame}[fragile]{}
 
-\begin{BVerbatim}
-        THREE
-      + THREE
-      +  FIVE
-      =ELEVEN
-\end{BVerbatim}
+\begin{verbatim}
+         THREE           56711
+      +  THREE   ->   +  56711
+      +   FIVE        +   8491
+      = ELEVEN        = 121913
+\end{verbatim}
 
 Variablen: $ {E, F, H, I, L, N, R, T, V} $ plus je sechs Überlauf- und Summen-Variablen
 

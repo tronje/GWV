@@ -8,7 +8,6 @@ class Variable(object):
         else:
             self.domain = domain
         self.meta = meta
-        self.constraints = []
         self.arcs = set()
 
     def __str__(self):
