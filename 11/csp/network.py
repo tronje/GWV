@@ -97,4 +97,3 @@ class Network(object):
                         if (narc.other_variable() == arc.variable
                            and narc.constraint != arc.constraint):
                             todo_arcs.add(narc)
-
