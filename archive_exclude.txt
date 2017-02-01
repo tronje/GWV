@@ -2,6 +2,10 @@
 *.aux
 *.log
 *.out
+*.vrb
+*.nav
+*.toc
+*.snm
 *.html
 *.png
 _minted*
