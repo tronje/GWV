@@ -15,6 +15,12 @@
 \usepackage{xspace}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
 
+\usepackage{fancyvrb}
+
+\usepackage{minted}
+
+\usepackage{marvosym}
+
 \title{Cryptoarithmetisches Puzzle}
 \subtitle{GWV WiSe 2016/2017}
 \date{\today}
@@ -37,23 +43,168 @@
 
 \begin{frame}[fragile]{Intro}
 
-\begin{center}
-    \begin{verbatim}  THREE
-+ THREE
-+  FIVE\end{verbatim}
-\rule{30cm}{.1pt}
-\begin{verbatim} ELEVEN\end{verbatim}
-\end{center}
+\begin{BVerbatim}
+        THREE
+      + THREE
+      +  FIVE
+      =ELEVEN
+\end{BVerbatim}
 
 \end{frame}
-
-\section{Probleme}
 
 \begin{frame}[fragile]{Probleme}
-    TODO
+    \begin{itemize}
+        \item AC3 Implementieren
+        \item Gute Constraints \& Variablen finden
+    \end{itemize}
 \end{frame}
 
+\section{AC3-Implementation}
 
+\begin{frame}[fragile]{AC3-Implementation}
+    \begin{minted}{python}
+class Network(object):
+
+    def __init__(self, variables):
+        self.variables = variables
+        self._arcs = None
+        self.constraints = []
+        self.unary_constraints = []
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{AC3-Implementation}
+    \begin{minted}{python}
+class Variable(object):
+
+    def __init__(self, domain=None, meta={}):
+        if domain is None:
+            self.domain = set()
+        else:
+            self.domain = domain
+        self.meta = meta
+        self.constraints = []
+        self.arcs = set()
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{AC3-Implementation}
+    \begin{minted}{python}
+class Constraint(object):
+
+    def __init__(self, variables, cfunc):
+        self.variables = variables
+        self.cfunc = cfunc
+
+    def is_satisfied(self, values):
+        assert type(values) is list
+        return self.cfunc(*values)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{AC3-Implementation}
+    \begin{minted}{python}
+class UnaryConstraint(object):
+
+    def __init__(self, variable, cfunc):
+        self.variable = variable
+        self.cfunc = cfunc
+
+    def is_satisfied(self, value):
+        return self.cfunc(value)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{AC3-Implementation}
+    \begin{minted}{python}
+class Arc(object):
+
+    def __init__(self, variable, constraint):
+        self.variable = variable
+        self.constraint = constraint
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{AC3-Implementation}
+    \begin{minted}[fontsize=\footnotesize]{python}
+class Arc(object):
+    # ...
+
+    def make_consistent(self):
+        non_consistent = []
+        other_variable = self.other_variable()
+
+        # find non-consistent elements
+        for elem in self.variable.domain:
+            for other in other_variable.domain:
+                if self.constraint.is_satisfied([elem, other]):
+                    break
+            else:
+                # for's else is executed if the loop
+                # was *not* interrupted by a break!
+                non_consistent.append(elem)
+
+        # remove non-consistent elements from domain
+        for elem in non_consistent:
+            self.variable.domain.remove(elem)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{AC3-Implementation}
+    \begin{minted}[fontsize=\footnotesize]{python}
+class Network(object):
+    # ...
+    def gac(self):
+        todo_arcs = self.arcs
+
+        self.satisfy_unary_constraints()
+
+        while len(todo_arcs) > 0:
+            arc = todo_arcs.pop()
+
+            if not arc.is_consistent():
+                arc.make_consistent()
+
+                for variable in self.variables:
+                    for narc in variable.arcs:
+                        if (narc.other_variable() == arc.variable
+                           and narc.constraint != arc.constraint):
+                            todo_arcs.add(narc)
+    \end{minted}
+\end{frame}
+
+\section{Constraints \& Variablen}
+
+\begin{frame}[fragile]{Variablen}
+    \begin{itemize}
+        \item Pro Buchstabe: eine Variable
+        \item Pro Spalte jeweils: eine Überlauf-Variable \& eine Summen-Variable
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+
+\begin{BVerbatim}
+        THREE
+      + THREE
+      +  FIVE
+      =ELEVEN
+\end{BVerbatim}
+
+Variablen: $ {E, F, H, I, L, N, R, T, V} $ plus je sechs Überlauf- und Summen-Variablen
+
+\end{frame}
+
+\begin{frame}[fragile]{Constraints}
+    \begin{itemize}
+        \item Jede Buchstaben-Variable, deren Buchstabe irgendwo an erster Stelle steht:
+            Ein \texttt{UnaryConstraint}, dass ihr Wert nicht 0 sein darf.
+        \item Jede Buchstaben-Variable mit jeder anderen Buchstaben-Variable:
+            Ein \texttt{Constraint}, dass die Werte ungleich sein müssen.
+        \item Jede Summen-Variable: muss gleich der Variable unter dem Strich sein
+            \Lightning
+    \end{itemize}
+\end{frame}
 
 \begin{frame}[standout]
     Questions?
@@ -61,21 +212,12 @@
 
 \appendix
 
-\begin{frame}[fragile]{Backup slides}
-    Sometimes, it is useful to add slides at the end of your presentation to
-    refer to during audience questions.
-
-    The best way to do this is to include the \verb|appendixnumberbeamer|
-    package in your preamble and call \verb|\appendix| before your backup slides.
-
-    \themename will automatically turn off slide numbering and progress bars for
-    slides in the appendix.
-\end{frame}
-
 \begin{frame}[allowframebreaks]{References}
 
     \bibliography{demo}
     \bibliographystyle{abbrv}
+    \url{http://artint.info/}\\
+    Poole, Mackworth
 
 \end{frame}
 
